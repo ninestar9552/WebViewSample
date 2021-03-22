@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WebView</string>
+
+    <string name="msg_finish_app">앱을 종료하시겠습니까?</string>
+    <string name="btn_yes">예</string>
+    <string name="btn_no">아니오</string>
+    <string name="btn_confirm">확인</string>
+
+    <string name="title_ssl_error">이 웹 사이트의 보안 인증서에 문제가 있습니다.</string>
+    <string name="msg_ssl_error">이 웹 사이트에서 제시한 보안 인증서는 신뢰할 만한 인증 기관에서 발급한 것이 아닙니다.\n문제가 있는 인증서를 통해 사용자를 속이거나 사용자가 서버로 보내는 데이터를 가로챌 수도 있습니다.</string>
+    <string name="btn_ssl_proceed">계속 탐색하기(권장하지 않음)</string>
+    <string name="btn_ssl_cancel">닫기</string>
+</resources>
