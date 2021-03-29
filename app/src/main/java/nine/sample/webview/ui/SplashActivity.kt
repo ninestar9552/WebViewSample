@@ -13,8 +13,9 @@ class SplashActivity : BaseActivity() {
 
         UIThread.execute({
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(C.Web.METHOD_KEY, C.Web.METHOD_GO_URL)
-            intent.putExtra(C.Web.TARGET_URL, mGlobal.getBaseUrl())
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    .putExtra(C.Extra.METHOD_KEY, C.METHOD_KEYS.GO_URL)
+                    .putExtra(C.Extra.TARGET_URL, mGlobal.getBaseUrl())
             startActivity(intent)
             finish()
         }, 1000)

@@ -41,7 +41,7 @@ class WebViewFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            targetUrl = bundle.getString(C.Web.TARGET_URL) ?: ""
+            targetUrl = bundle.getString(C.Extra.TARGET_URL) ?: ""
         }
     }
 
@@ -62,15 +62,19 @@ class WebViewFragment : BaseFragment() {
             webView.defaultSetting()
             webView.webViewClient = BaseWebViewClient()
             webView.webChromeClient = BaseWebChromeClient()
-            webView.addJavascriptInterface(AndroidBridge(requireContext()), C.Web.APP_BRIDGE_NAME)
+            webView.addJavascriptInterface(AndroidBridge(requireContext()), C.BRIDGE.APP_BRIDGE_NAME)
             refreshWebView(webView, targetUrl)
         }
 
         loadJsTest()
     }
 
-    private fun refreshWebView(webView: WebView, url: String) {
+    fun refreshWebView(webView: WebView, url: String) {
         webView.clearCache(true)
+        webView.loadUrl(url)
+    }
+
+    fun goUrl(webView: WebView, url: String) {
         webView.loadUrl(url)
     }
 
@@ -84,6 +88,7 @@ class WebViewFragment : BaseFragment() {
 
     open inner class BaseWebViewClient: WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            Log.d(TAG, "[shouldOverrideUrlLoading]url:: ${request.url}")
             Log.d(TAG, "[shouldOverrideUrlLoading]scheme:: ${request.url.scheme}")
             Log.d(TAG, "[shouldOverrideUrlLoading]host:: ${request.url.host}")
             Log.d(TAG, "[shouldOverrideUrlLoading]path:: ${request.url.path}")

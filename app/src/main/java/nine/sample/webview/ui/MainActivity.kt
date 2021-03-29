@@ -2,6 +2,7 @@ package nine.sample.webview.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import nine.sample.webview.R
 import nine.sample.webview.C
 
@@ -19,25 +20,32 @@ class MainActivity : BaseActivity() {
     }
 
     private fun goIntent(intent: Intent) {
-        val methodKey = intent.getStringExtra(C.Web.METHOD_KEY)
-        methodKey?.let { method ->
-            when(method) {
-                C.Web.METHOD_GO_URL -> {
-                    val targetUrl = intent.getStringExtra(C.Web.TARGET_URL)
-                    targetUrl?.let { url ->
-                        val webViewFragment = WebViewFragment.getInstance()
-                        val bundle = Bundle()
-                        bundle.putString(C.Web.TARGET_URL, url)
-                        webViewFragment.arguments = bundle
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.container, webViewFragment)
-                            .commit()
+        intent.getStringExtra(C.Extra.METHOD_KEY)?.let { methodKey ->
+            when(methodKey) {
+                C.METHOD_KEYS.GO_URL -> {
+                    intent.getStringExtra(C.Extra.TARGET_URL)?.let { url ->
+                        Log.d(TAG, "TARGET_URL: $url")
+                        goWebView(targetUrl = url)
                     }
                 }
                 else -> {
 
                 }
             }
+        }
+    }
+
+    private fun goWebView(targetUrl: String) {
+        WebViewFragment.getInstance().getWebView()?.let { webView ->
+            WebViewFragment.getInstance().goUrl(webView, targetUrl)
+        } ?: run {
+            val webViewFragment = WebViewFragment.getInstance()
+            val bundle = Bundle()
+            bundle.putString(C.Extra.TARGET_URL, targetUrl)
+            webViewFragment.arguments = bundle
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, webViewFragment)
+                    .commit()
         }
     }
 
